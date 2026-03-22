@@ -1,0 +1,19 @@
+{
+  "name": "create-typst-lmu",
+  "version": "1.0.0",
+  "description": "LMU Typst Template Generator",
+  "main": "bin/index.js",
+  "bin": {
+    "create-typst-lmu": "bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "keywords": ["typst", "lmu", "template", "university"],
+  "author": "Moritz Griesser",
+  "license": "MIT",
+  "dependencies": {
+    "kleur": "^4.1.5",
+    "prompts": "^2.4.2"
+  }
+}
