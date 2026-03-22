@@ -3,6 +3,7 @@
   subtitle: none,
   author: "Dein Name",
   date: datetime.today().display("[day].[month].[year]"),
+  university: "Ludwig-Maximilians-Universität München",
   faculty: "Fakultät für Physik",
   institute: "Lehrstuhl für ...",
   advisor: none,
@@ -20,58 +21,66 @@
     fill: white,
   )
 
-  // --- Deckblatt Logik ---
+  // --- Deckblatt & Titelseite (LaTeX Style) ---
   if kind == "labreport" {
-    // 1. Offizielles Deckblatt (falls PDF vorhanden)
-    // Wir versuchen es einzubinden, ansonsten zeigen wir ein modernes LMU Deckblatt
-    page(header: none, footer: none, margin: 0pt)[
-      #align(center + middle)[
-        #v(-2cm)
-        #text(20pt, weight: "bold")[Ludwig-Maximilians-Universität München] \
-        #text(16pt)[Fakultät für Physik] \
-        #v(3cm)
-        #text(28pt, weight: "bold")[#title] \
-        #v(1cm)
-        #text(18pt)[Bericht / Auswertung] \
-        #v(4cm)
-        #grid(
-          columns: (1fr, 1fr),
-          gutter: 2em,
-          align(right, [Vorgelegt von:]), align(left, author),
-          align(right, [Datum:]), align(left, date),
-        )
-        #v(1fr)
-        #text(10pt, style: "italic")[Erstellt mit dem LMU Typst Template]
-      ]
+    // Option: Offizielles Deckblatt-PDF einbinden (falls vorhanden)
+    // page(header: none, footer: none, margin: 0pt)[#image("figures/Deckblatt-P1-web.pdf", width: 100%)]
+
+    page(header: none, footer: none)[
+      #set align(center)
+      #v(1cm)
+      // \large \sf \workUniversity
+      #text(size: 12pt, font: "Arial")[#university] \
+      #v(0.2cm)
+      // \bf \workInstitute
+      #text(size: 12pt, weight: "bold")[#institute]
+      
+      #v(4cm)
+      // \workTitle
+      #text(size: 18pt, weight: "bold")[#title]
+      
+      #v(2cm)
+      // \large Bericht / Auswertung
+      #text(size: 12pt)[Bericht / Auswertung]
+      
+      #v(4cm)
+      // \author{\workAuthor}
+      #text(size: 12pt)[#author]
+      
+      #v(1cm)
+      // \date{\workDate}
+      #text(size: 12pt)[#date]
+      
+      #v(1fr)
     ]
   } else {
-    // Standard Titelseite
+    // Standard LaTeX \maketitle Style
     page(header: none, footer: none)[
-      #align(center)[
-        #v(2cm)
-        #text(14pt, weight: "bold")[Ludwig-Maximilians-Universität München] \
-        #text(12pt)[#faculty] \
-        #text(11pt)[#institute]
-        
-        #v(4cm)
-        #text(24pt, weight: "bold")[#title]
-        #if subtitle != none {
-          v(0.5cm)
-          text(18pt)[#subtitle]
-        }
-        
-        #v(4cm)
-        #grid(
-          columns: (1fr, 1fr),
-          gutter: 1em,
-          align(right, [Autor:]), align(left, author),
-          align(right, [Datum:]), align(left, date),
-          ..if advisor != none { (align(right, [Betreuer:]), align(left, advisor)) }
-        )
-        
-        #v(1fr)
-        #box(stroke: 1pt, inset: 10pt)[LMU MÜNCHEN]
-      ]
+      #set align(center)
+      #v(3cm)
+      #text(size: 22pt, weight: "bold")[#title]
+      #if subtitle != none {
+        v(0.5cm)
+        text(size: 16pt)[#subtitle]
+      }
+      
+      #v(3cm)
+      #text(size: 14pt)[#author]
+      
+      #v(1cm)
+      #text(size: 12pt)[#date]
+      
+      #v(4cm)
+      #text(size: 12pt)[#university] \
+      #text(size: 11pt)[#faculty] \
+      #text(size: 11pt)[#institute]
+      
+      #if advisor != none {
+        v(2cm)
+        text(size: 11pt)[Betreuer: #advisor]
+      }
+      
+      #v(1fr)
     ]
   }
 
