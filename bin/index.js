@@ -6,7 +6,7 @@ const prompts = require('prompts');
 const { green, cyan, red, bold, yellow } = require('kleur');
 
 async function main() {
-  console.log(bold(cyan('\n--- LMU Typst Template Installer ---\n')));
+  console.log(bold(cyan('\n--- LMU Typst Template Installer (v1.0.1) ---\n')));
 
   const response = await prompts([
     {

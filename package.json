@@ -1,6 +1,6 @@
 {
   "name": "create-typst-lmu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LMU Typst Template Generator",
   "main": "bin/index.js",
   "bin": {
