@@ -78,10 +78,20 @@ async function main() {
   ];
 
   for (const file of filesToCopy) {
-    fs.copyFileSync(
-      path.join(templateDir, file.src),
-      path.join(targetPath, file.dest)
-    );
+    const srcPath = path.join(templateDir, file.src);
+    const destPath = path.join(targetPath, file.dest);
+    
+    // Create directory for file if it doesn't exist
+    const destDir = path.dirname(destPath);
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, destPath);
+    } else {
+      console.warn(red(`Warning: Could not find ${file.src} in template directory.`));
+    }
   }
 
   // Read and replace main.typ
