@@ -64,11 +64,25 @@ async function main() {
 
   const templateDir = path.join(__dirname, '..', 'template');
   
-  // Copy lib.typ
-  fs.copyFileSync(
-    path.join(templateDir, 'lib.typ'),
-    path.join(targetPath, 'lib.typ')
-  );
+  // Create .vscode directory if needed
+  const vscodeDir = path.join(targetPath, '.vscode');
+  if (!fs.existsSync(vscodeDir)) {
+    fs.mkdirSync(vscodeDir, { recursive: true });
+  }
+
+  // Files to copy
+  const filesToCopy = [
+    { src: 'lib.typ', dest: 'lib.typ' },
+    { src: '.vscode/extensions.json', dest: '.vscode/extensions.json' },
+    { src: '.vscode/settings.json', dest: '.vscode/settings.json' }
+  ];
+
+  for (const file of filesToCopy) {
+    fs.copyFileSync(
+      path.join(templateDir, file.src),
+      path.join(targetPath, file.dest)
+    );
+  }
 
   // Read and replace main.typ
   let mainContent = fs.readFileSync(path.join(templateDir, 'main.typ'), 'utf8');

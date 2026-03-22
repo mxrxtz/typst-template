@@ -1,0 +1,10 @@
+{
+  "tinymist.exportPdf": "onSave",
+  "tinymist.previewPdf": "onSave",
+  "tinymist.formatterMode": "typstyle",
+  "editor.formatOnSave": true,
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamers.tinymist"
+  },
+  "tinymist.systemFonts": true
+}
