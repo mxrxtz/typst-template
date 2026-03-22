@@ -2,7 +2,7 @@
   title: "Titel der Arbeit",
   subtitle: none,
   author: "Dein Name",
-  date: datetime.today().display(identifier: "[day].[month].[year]"),
+  date: datetime.today().display("[day].[month].[year]"),
   faculty: "Fakultät für Physik",
   institute: "Lehrstuhl für ...",
   advisor: none,
@@ -11,6 +11,7 @@
   set document(title: title, author: author)
   set page(
     paper: "a4",
+    fill: white,
     margin: (x: 2.5cm, y: 3cm),
     header: context {
       if counter(page).get().first() > 1 {
@@ -30,7 +31,7 @@
     },
   )
 
-  set text(font: "Linux Libertine", size: 11pt, lang: "de")
+  set text(font: "Arial", size: 11pt, lang: "de")
   set par(justify: true)
 
   // Title Page
