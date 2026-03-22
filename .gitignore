@@ -1,1 +1,6 @@
-node_modules/\n.DS_Store\npackage-lock.json
+node_modules/
+.DS_Store
+package-lock.json
+
+# Wir wollen aber den .vscode Ordner im template behalten!
+!template/.vscode/
