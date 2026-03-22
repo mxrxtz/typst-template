@@ -6,9 +6,19 @@ const prompts = require('prompts');
 const { green, cyan, red, bold, yellow } = require('kleur');
 
 async function main() {
-  console.log(bold(cyan('\n--- LMU Typst Template Installer (v1.0.3) ---\n')));
+  console.log(bold(cyan('\n--- LMU Typst Template Installer (v1.0.4) ---\n')));
 
   const response = await prompts([
+    {
+      type: 'select',
+      name: 'kind',
+      message: 'Art der Arbeit:',
+      choices: [
+        { title: 'Standard (Hausarbeit/Thesis)', value: 'standard' },
+        { title: 'Versuchsauswertung (Laborbericht)', value: 'labreport' }
+      ],
+      initial: 0
+    },
     {
       type: 'text',
       name: 'author',
@@ -19,13 +29,25 @@ async function main() {
       type: 'text',
       name: 'title',
       message: 'Titel der Arbeit:',
-      initial: 'Physikalisches Fortgeschrittenenpraktikum'
+      initial: 'Physikalisches Praktikum'
+    },
+    {
+      type: 'text',
+      name: 'faculty',
+      message: 'Fakultät:',
+      initial: 'Fakultät für Physik'
+    },
+    {
+      type: 'text',
+      name: 'institute',
+      message: 'Institut/Lehrstuhl:',
+      initial: 'Lehrstuhl für Experimentalphysik'
     },
     {
       type: 'text',
       name: 'outDir',
       message: 'Zielverzeichnis:',
-      initial: 'mein-versuch'
+      initial: 'mein-bericht'
     }
   ]);
 
@@ -36,14 +58,14 @@ async function main() {
 
   const targetPath = path.resolve(process.cwd(), response.outDir);
   const templateDir = path.join(__dirname, '..', 'template');
-  
+
   console.log(cyan(`\nErstelle Projekt in: ${targetPath}`));
 
   // Recursive copy helper
   function copyRecursive(src, dest) {
     const stats = fs.statSync(src);
     const isDirectory = stats.isDirectory();
-    
+
     if (isDirectory) {
       if (!fs.existsSync(dest)) {
         fs.mkdirSync(dest, { recursive: true });
@@ -67,12 +89,16 @@ async function main() {
     // 2. Process main.typ (replace placeholders)
     const mainPath = path.join(targetPath, 'main.typ');
     let mainContent = fs.readFileSync(mainPath, 'utf8');
-    
+
     mainContent = mainContent
       .replace('{{TITLE}}', response.title || 'Titel')
-      .replace('{{AUTHOR}}', response.author || 'Dein Name');
+      .replace('{{AUTHOR}}', response.author || 'Dein Name')
+      .replace('{{FACULTY}}', response.faculty || 'Fakultät')
+      .replace('{{INSTITUTE}}', response.institute || 'Institut')
+      .replace('{{KIND}}', response.kind);
 
     fs.writeFileSync(mainPath, mainContent);
+
 
     console.log(green(`\n🚀 Projekt erfolgreich in "${response.outDir}" erstellt!`));
     console.log(cyan(`\nÖffne den Ordner nun in VS Code:`));

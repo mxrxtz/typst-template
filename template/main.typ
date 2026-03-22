@@ -2,15 +2,14 @@
 
 #show: lmu-template.with(
   title: "{{TITLE}}",
-  subtitle: "{{SUBTITLE}}",
   author: "{{AUTHOR}}",
   faculty: "{{FACULTY}}",
   institute: "{{INSTITUTE}}",
-  advisor: "{{ADVISOR}}",
+  kind: "{{KIND}}", // "standard" oder "labreport"
 )
 
 = Einleitung
-Hier beginnt deine Arbeit...
+Hier beginnt dein Bericht...
 
 = Durchführung
 Details zur Durchführung...
